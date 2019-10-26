@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.ui.category.edit"
+            defaultHandler="de.achimmihca.lineshortcuts.commands.CutLineOrSelectedTextHandler"
+            id="de.achimmihca.lineshortcuts.commands.cutLineOrSelectedText"
+            name="Cut Line or Selected Text">
+      </command>
+      <command
+            categoryId="org.eclipse.ui.category.edit"
+            defaultHandler="de.achimmihca.lineshortcuts.commands.CopyLineOrSelectedTextHandler"
+            id="de.achimmihca.lineshortcuts.commands.copyLineOrSelectedText"
+            name="Copy Line or Selected Text">
+      </command>
+    </extension>
+
+    <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.achimmihca.lineshortcuts.commands.cutLineOrSelectedText"
+            contextId="org.eclipse.ui.textEditorScope"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+X">
+      </key>
+      <key
+            commandId="de.achimmihca.lineshortcuts.commands.copyLineOrSelectedText"
+            contextId="org.eclipse.ui.textEditorScope"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+C">
+      </key>
+   </extension>
+</plugin>

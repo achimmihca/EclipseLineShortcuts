@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Cut and Copy Line Shortcuts
+Bundle-SymbolicName: de.achimmihca.lineshortcuts;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: https://github.com/achimmihca/EclipseLineShortcuts
+Automatic-Module-Name: CutAndCopyLineShortcuts 
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui,
+ org.eclipse.ui.editors
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Import-Package: javax.annotation,
+ org.eclipse.ui,
+ org.eclipse.ui.part,
+ org.eclipse.ui.plugin
+Bundle-ClassPath: .
+Bundle-Activator: de.achimmihca.lineshortcuts.ShortcutsActivator
+Bundle-ActivationPolicy: lazy
+

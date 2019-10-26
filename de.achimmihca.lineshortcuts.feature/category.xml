@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="de.achimmihca.lineshortcuts.feature">
+      <category name="de.achimmihca.lineshortcuts.category"/>
+   </feature>
+   <category-def name="de.achimmihca.lineshortcuts.category" label="Cut and Copy Line Shortcuts"/>
+</site>
