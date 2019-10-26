@@ -5,6 +5,8 @@ Update Site: https://raw.githubusercontent.com/achimmihca/EclipseLineShortcuts/r
 
 # Screenshots
 
+<br /><img src="web-assets/screenshots/lineshortcuts-key-preferences.png" width="400">
+
 # Development Environment Setup
 The following explains how to set up your Eclipse IDE to continue the development of this plugin.
 
