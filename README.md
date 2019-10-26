@@ -1,7 +1,10 @@
 This is an Eclipse plugin that adds commands to cut and copy a complete line or the selected text, depending on the selection.
 If there is no text selected then the complete line is cut / copied. Otherwise the selected text is cut / copied as usual.
 
+Published on the [Eclipse Marketplace](https://marketplace.eclipse.org/content/lineshortcuts)<br>
 Update Site: https://raw.githubusercontent.com/achimmihca/EclipseLineShortcuts/release/updatesite
+
+[![Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4856006 "Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client")
 
 # Screenshots
 
