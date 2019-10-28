@@ -2,6 +2,7 @@ package de.achimmihca.lineshortcuts.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 
 import de.achimmihca.lineshortcuts.logging.LogWrapper;
@@ -15,10 +16,13 @@ public class CopyLineOrSelectedTextHandler extends AbstractEditorTextSelectionHa
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getService( IHandlerService.class );
+
 		// Get the current text editor
 		var textEditor = getActiveTextEditor();
 		if( textEditor == null ) {
-			return null;
+			// Fall back to default copy handler
+			return executeDefaultCopyHandler( handlerService );
 		}
 		// Get the current selection
 		var textSelection = getTextSelection( textEditor );
@@ -27,31 +31,36 @@ public class CopyLineOrSelectedTextHandler extends AbstractEditorTextSelectionHa
 		}
 
 		// Copy the line when the selection is empty. Otherwise, copy the selected text.
-		IHandlerService handlerService = (IHandlerService) textEditor.getSite().getService( IHandlerService.class );
 		if( textSelection.getLength() == 0 ) {
-			copyLine( handlerService );
+			return copyLine( handlerService );
 		} else {
-			copySelectedText( handlerService );
+			return copySelectedText( handlerService );
 		}
-		return null;
 	}
 
-	private void copySelectedText(IHandlerService handlerService) {
+	private Object executeDefaultCopyHandler(IHandlerService handlerService) {
 		try {
-			handlerService.executeCommand( "org.eclipse.ui.edit.copy", null );
+			return handlerService.executeCommand( "org.eclipse.ui.edit.copy", null );
 		} catch( Exception e ) {
 			log.error( e );
+			return null;
 		}
 	}
 
-	private void copyLine(IHandlerService handlerService) {
+	private Object copySelectedText(IHandlerService handlerService) {
+		return executeDefaultCopyHandler( handlerService );
+	}
+
+	private Object copyLine(IHandlerService handlerService) {
+		// First select the complete line, afterwards copy the selected text.
 		try {
 			handlerService.executeCommand( "org.eclipse.ui.edit.text.goto.lineStart", null );
 			handlerService.executeCommand( "org.eclipse.ui.edit.text.select.lineEnd", null );
-			handlerService.executeCommand( "org.eclipse.ui.edit.copy", null );
 		} catch( Exception e ) {
-			log.error( e );
+			log.error( "Exception in attempt to copy the complete line. Falling back to default copy handler", e );
+			return executeDefaultCopyHandler( handlerService );
 		}
+		return copySelectedText( handlerService );
 	}
 
 }

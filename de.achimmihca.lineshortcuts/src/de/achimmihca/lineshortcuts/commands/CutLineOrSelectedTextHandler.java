@@ -2,6 +2,7 @@ package de.achimmihca.lineshortcuts.commands;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;
 
 import de.achimmihca.lineshortcuts.logging.LogWrapper;
@@ -15,10 +16,13 @@ public class CutLineOrSelectedTextHandler extends AbstractEditorTextSelectionHan
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		IHandlerService handlerService = (IHandlerService) PlatformUI.getWorkbench().getService( IHandlerService.class );
+
 		// Get the current text editor
 		var textEditor = getActiveTextEditor();
 		if( textEditor == null ) {
-			return null;
+			// Fall back to default cut handler
+			return executeDefaultCutHandler( handlerService );
 		}
 		// Get the current selection
 		var textSelection = getTextSelection( textEditor );
@@ -27,28 +31,32 @@ public class CutLineOrSelectedTextHandler extends AbstractEditorTextSelectionHan
 		}
 
 		// Cut the line when the selection is empty. Otherwise, cut the selected text.
-		IHandlerService handlerService = (IHandlerService) textEditor.getSite().getService( IHandlerService.class );
 		if( textSelection.getLength() == 0 ) {
-			cutLine( handlerService );
+			return cutLine( handlerService );
 		} else {
-			cutSelectedText( handlerService );
-		}
-		return null;
-	}
-
-	private void cutSelectedText(IHandlerService handlerService) {
-		try {
-			handlerService.executeCommand( "org.eclipse.ui.edit.cut", null );
-		} catch( Exception e ) {
-			log.error( e );
+			return cutSelectedText( handlerService );
 		}
 	}
 
-	private void cutLine(IHandlerService handlerService) {
+	private Object executeDefaultCutHandler(IHandlerService handlerService) {
 		try {
-			handlerService.executeCommand( "org.eclipse.ui.edit.text.cut.line", null );
+			return handlerService.executeCommand( "org.eclipse.ui.edit.cut", null );
 		} catch( Exception e ) {
 			log.error( e );
+			return null;
+		}
+	}
+
+	private Object cutSelectedText(IHandlerService handlerService) {
+		return executeDefaultCutHandler( handlerService );
+	}
+
+	private Object cutLine(IHandlerService handlerService) {
+		try {
+			return handlerService.executeCommand( "org.eclipse.ui.edit.text.cut.line", null );
+		} catch( Exception e ) {
+			log.error( e );
+			return null;
 		}
 	}
 }
