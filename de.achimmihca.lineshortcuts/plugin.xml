@@ -21,13 +21,13 @@
          point="org.eclipse.ui.bindings">
       <key
             commandId="de.achimmihca.lineshortcuts.commands.cutLineOrSelectedText"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="CTRL+X">
       </key>
       <key
             commandId="de.achimmihca.lineshortcuts.commands.copyLineOrSelectedText"
-            contextId="org.eclipse.ui.textEditorScope"
+            contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="CTRL+C">
       </key>
